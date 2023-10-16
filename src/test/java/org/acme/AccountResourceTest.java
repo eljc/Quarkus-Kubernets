@@ -3,9 +3,7 @@ package org.acme;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,9 +16,11 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
 
 @QuarkusTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AccountResourceTest {
 
     @Test
+    @Order(1)
     void testRetriveAll(){
         Response result = given()
                 .when().get("/accounts")
@@ -40,6 +40,7 @@ public class AccountResourceTest {
     }
 
     @Test
+    @Order(2)
     void testGetAccount(){
         Account account = given()
                 .when().get("/accounts/{accountNumber}", 545454545L)
